@@ -1,13 +1,11 @@
 syntax = "proto3";
 
-
 import "proto/audio-proto/audio.proto";
 import "proto/auth-proto/auth.proto";
 
 package gateway;
 
-
-option go_package="./proto";
+option go_package=".";
 
 service GatewayService {
   rpc Download(audio.DownloadRequest) returns (audio.DownloadResponse) {}

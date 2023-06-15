@@ -1,6 +1,20 @@
-create:
-	protoc --proto_path=proto proto/*.proto --go_out=gen/
-	protoc --proto_path=proto proto/*.proto --go-grpc_out=gen/
+create-audio:
+	protoc --proto_path=proto proto/audio-proto/*.proto --go_out=proto/audio-proto/
+	protoc --proto_path=proto proto/audio-proto/*.proto --go-grpc_out=proto/audio-proto/
 
-clean:
-	rm gen/proto/*.go
+create-auth:
+	protoc --proto_path=proto proto/auth-proto/*.proto --go_out=proto/auth-proto/
+	protoc --proto_path=proto proto/auth-proto/*.proto --go-grpc_out=proto/auth-proto/
+
+create-gateway:
+	protoc --proto_path=proto proto/gateway-proto/*.proto --go_out=proto/gateway-proto/
+	protoc --proto_path=proto proto/gateway-proto/*.proto --go-grpc_out=proto/gateway-proto/
+
+clean-audio:
+	rm proto/audio-proto/*.go
+
+clean-auth:
+	rm proto/auth-proto/*.go
+
+clean-gateway:
+	rm proto/gateway-proto/*.go

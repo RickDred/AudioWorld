@@ -1,4 +1,3 @@
-// main.go
 package main
 
 import (
@@ -9,8 +8,8 @@ import (
 
 	"google.golang.org/grpc"
 
-	audio "path-to-audio-service-proto"
-	auth "path-to-auth-service-proto"
+	audio "proto/audio-proto"
+	auth "proto/auth-proto"
 )
 
 type gatewayService struct{}

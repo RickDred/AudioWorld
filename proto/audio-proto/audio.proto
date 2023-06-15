@@ -1,32 +1,36 @@
 syntax = "proto3";
 package audio;
 
+option go_package=".";
+
 service AudioService {
   rpc Download(DownloadRequest) returns (DownloadResponse) {}
-  rpc Add(AddRequest) returns (AddResponse) {}
+  rpc Upload(UploadRequest) returns (UploadResponse) {}
   rpc Listen(ListenRequest) returns (ListenResponse) {}
 }
 
 message DownloadRequest {
-  // Request fields (if any)
+  string fileId = 1;
 }
 
 message DownloadResponse {
-  // Response fields (if any)
+  bytes audioData = 1;
+
 }
 
-message AddRequest {
-  // Request fields (if any)
+message UploadRequest {
+  bytes audioData = 1;
+  string name = 2;
 }
 
-message AddResponse {
-  // Response fields (if any)
+message UploadResponse {
+  string fileId = 1;
 }
 
 message ListenRequest {
-  // Request fields (if any)
+  string fileId = 1;
 }
 
 message ListenResponse {
-  // Response fields (if any)
+  int32 status = 1;
 }
