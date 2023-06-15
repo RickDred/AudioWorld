@@ -10,6 +10,10 @@ create-gateway:
 	protoc --proto_path=proto proto/gateway-proto/*.proto --go_out=proto/gateway-proto/
 	protoc --proto_path=proto proto/gateway-proto/*.proto --go-grpc_out=proto/gateway-proto/
 
+create-api-gateway:
+	protoc --proto_path=api-gateway api-gateway/gateway-proto/*.proto --go_out=api-gateway/gateway-proto/
+	protoc --proto_path=api-gateway api-gateway/gateway-proto/*.proto --go-grpc_out=api-gateway/gateway-proto/
+
 clean-audio:
 	rm proto/audio-proto/*.go
 
