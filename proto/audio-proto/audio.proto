@@ -1,0 +1,32 @@
+syntax = "proto3";
+package audio;
+
+service AudioService {
+  rpc Download(DownloadRequest) returns (DownloadResponse) {}
+  rpc Add(AddRequest) returns (AddResponse) {}
+  rpc Listen(ListenRequest) returns (ListenResponse) {}
+}
+
+message DownloadRequest {
+  // Request fields (if any)
+}
+
+message DownloadResponse {
+  // Response fields (if any)
+}
+
+message AddRequest {
+  // Request fields (if any)
+}
+
+message AddResponse {
+  // Response fields (if any)
+}
+
+message ListenRequest {
+  // Request fields (if any)
+}
+
+message ListenResponse {
+  // Response fields (if any)
+}

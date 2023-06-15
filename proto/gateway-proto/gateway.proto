@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+
+import "proto/audio-proto/audio.proto";
+import "proto/auth-proto/auth.proto";
+
+package gateway;
+
+
+option go_package="./proto";
+
+service GatewayService {
+  rpc Download(audio.DownloadRequest) returns (audio.DownloadResponse) {}
+  rpc Add(audio.AddRequest) returns (audio.AddResponse) {}
+  rpc Listen(audio.ListenRequest) returns (audio.ListenResponse) {}
+  rpc Authorization(auth.AuthorizationRequest) returns (auth.AuthorizationResponse) {}
+  rpc Registration(auth.RegistrationRequest) returns (auth.RegistrationResponse) {}
+}

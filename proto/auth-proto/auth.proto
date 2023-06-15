@@ -1,0 +1,23 @@
+syntax = "proto3";
+package auth;
+
+service AuthService {
+  rpc Authorization(AuthorizationRequest) returns (AuthorizationResponse) {}
+  rpc Registration(RegistrationRequest) returns (RegistrationResponse) {}
+}
+
+message AuthorizationRequest {
+  // Request fields (if any)
+}
+
+message AuthorizationResponse {
+  // Response fields (if any)
+}
+
+message RegistrationRequest {
+  // Request fields (if any)
+}
+
+message RegistrationResponse {
+  // Response fields (if any)
+}
