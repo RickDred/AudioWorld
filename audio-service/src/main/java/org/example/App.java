@@ -12,7 +12,7 @@ import java.io.IOException;
 public class App
 {
     public static void main( String[] args ) throws IOException, InterruptedException {
-        Server server = ServerBuilder.forPort(8011).addService(new ControllerServiceImpl()).build();
+        Server server = ServerBuilder.forPort(8012).addService(new ControllerServiceImpl()).build();
 
         server.start();
 

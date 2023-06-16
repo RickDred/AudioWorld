@@ -6,10 +6,18 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import org.bson.Document;
+
+import javax.sound.sampled.*;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 
 public class ControllerServiceImpl extends AudioServiceGrpc.AudioServiceImplBase {
     // Создание подключения к MongoDB
@@ -21,21 +29,51 @@ public class ControllerServiceImpl extends AudioServiceGrpc.AudioServiceImplBase
 
 
 //
-    @Override
-    public void audioListen(AudioServiceOuterClass.ListenRequest request, StreamObserver<AudioServiceOuterClass.ListenResponse> responseStreamObserver)
-    {
-        System.out.println(request);
+@Override
+public void listen(AudioServiceOuterClass.ListenRequest request, StreamObserver<AudioServiceOuterClass.ListenResponse> responseStreamObserver) {
+    String audioUrl = request.getFileId();
 
-        AudioServiceOuterClass.ListenResponse response = AudioServiceOuterClass.ListenResponse.newBuilder().setStatus(0).build();
+    try {
+        // Загрузка аудиофайла по URL
+        InputStream inputStream = ControllerServiceImpl.class.getResourceAsStream("src/main/java/org/example/Book/" + audioUrl + ".mp3");
+        if (inputStream == null) {
+            throw new FileNotFoundException("Audio file not found: " + audioUrl);
+        }
+
+        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(inputStream);
+
+        // Получение Clip из AudioInputStream
+        Clip clip = AudioSystem.getClip();
+        clip.open(audioInputStream);
+
+        // Воспроизведение аудио
+        clip.start();
+
+        // Ждем, пока аудио не будет полностью воспроизведено
+        while (clip.isRunning()) {
+            Thread.sleep(10);
+        }
+
+        // Закрываем Clip и освобождаем ресурсы
+        clip.close();
+        audioInputStream.close();
+        inputStream.close();
+
+        // Отправка ответа об успешном прослушивании
+        AudioServiceOuterClass.ListenResponse response = AudioServiceOuterClass.ListenResponse.newBuilder().setStatus("working....").build();
 
         responseStreamObserver.onNext(response);
         responseStreamObserver.onCompleted();
+    } catch (IOException | UnsupportedAudioFileException | LineUnavailableException | InterruptedException e) {
+        // Обработка исключений и отправка сообщения об ошибке
+        String errorMessage = "Error occurred during audio playback: " + e.getMessage();
+        AudioServiceOuterClass.ListenResponse errorResponse = AudioServiceOuterClass.ListenResponse.newBuilder().build();
+        responseStreamObserver.onError(Status.INTERNAL.withDescription(errorMessage).asRuntimeException());
     }
+}
 
-    @Override
-    public void Upload(AudioServiceOuterClass.UploadRequest request, StreamObserver<AudioServiceOuterClass.UploadResponse> responseStreamObserver) {
 
-    }
+
 
 
     @Override

@@ -33,5 +33,5 @@ message ListenRequest {
 }
 
 message ListenResponse {
-  int32 status = 1;
+  string status = 1;
 }
