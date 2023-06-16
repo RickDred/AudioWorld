@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option go_package = "./messenger";
+
+package messenger;
+
+service Messenger {
+  rpc SendMessage(Message) returns (SendMessageResponse) {}
+}
+
+message Message {
+  string body = 1;
+}
+
+message SendMessageResponse {
+  bool success = 1;
+}
