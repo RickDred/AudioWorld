@@ -1,0 +1,36 @@
+syntax = "proto3";
+package audio;
+
+option go_package=".";
+
+service AudioService {
+  rpc Download(DownloadRequest) returns (DownloadResponse) {}
+  rpc Upload(UploadRequest) returns (UploadResponse) {}
+  rpc Listen(ListenRequest) returns (ListenResponse) {}
+}
+
+message DownloadRequest {
+  string fileId = 1;
+}
+
+message DownloadResponse {
+  bytes audioData = 1;
+
+}
+
+message UploadRequest {
+  bytes audioData = 1;
+  string name = 2;
+}
+
+message UploadResponse {
+  string fileId = 1;
+}
+
+message ListenRequest {
+  string fileId = 1;
+}
+
+message ListenResponse {
+  int32 status = 1;
+}
